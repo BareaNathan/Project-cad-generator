@@ -8,17 +8,17 @@ def get_spreadsheet(name):
 	return sh
 
 #Function to get the columns of references and parnumber from XLS
-def get_columns(sheet):
-	col_b = sheet.col(1)
-	col_b.insert(0," ")
-	str_col_b = str(col_b)
-	list_col_b = str_col_b.split(', ')
+def get_columns(sheet,part_col,ref_col):
+	part = sheet.col(part_col)
+	part.insert(0," ")
+	str_part = str(part)
+	list_part = str_part.split(', ')
 
-	col_e = sheet.col(4)
-	str_col_e = str(sheet.col(4))
-	list_col_e = str_col_e.split(',')
+	ref = sheet.col(ref_col)
+	str_ref = str(sheet.col(ref_col))
+	list_ref = str_ref.split(',')
 
-	return list_col_e, list_col_b
+	return list_ref, list_part
 
 #Function to treat the list, getting just the important information
 def clean_lists(ref_list, part_list):
@@ -65,13 +65,17 @@ def get_csv_data(name, template_model):
 
 #Unificate it all
 def join_csv_and_xls(csv_data,xls_ref_data,xls_part_data):
-	for row in csv_data:
+	temp_csv = csv_data.copy()
+	for row in temp_csv:
 		if row[0] in xls_ref_data:
 			xls_ref_index = xls_ref_data.index(row[0])
 			row.append(xls_part_data[xls_ref_index])
+		
 		else:
 			row.append('Not found in XLS file')
-	return csv_data
+		
+
+	return temp_csv
 
 #Write a new CSV file with the output data
 def output_csv(filename, list_of_contents):
