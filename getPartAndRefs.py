@@ -29,7 +29,7 @@ def clean_lists(ref_list, part_list):
 	for x in ref_list:
 		if 'text' in x:
 			index_raw_ref = ref_list.index(x)
-			raw_part.append(part_list[index_raw_ref].replace("text:'","").replace("'","")[0:6])
+			raw_part.append(part_list[index_raw_ref].replace("text:'","").replace("'","")[0:6].replace('999999','NONE'))
 			raw_ref.append(x.replace(" text:'","").replace(" '",""))
 
 	part = []
@@ -52,6 +52,7 @@ def get_csv_data(name, template_model):
 	csv_data = []
 	with open(name) as file:
 		csv_sheet = csv.DictReader(file,fieldnames=('A','B','C','D','E','F','G','H','I','J'))
+
 		if template_model == 'Altium':
 			for row in csv_sheet:
 				csv_data.append([row['A'],row['E'],row['F'],row['G']])
