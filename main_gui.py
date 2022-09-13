@@ -46,7 +46,7 @@ def call_write_function(path_xls,path_csv):
 					row.append('Not Found')
 					row.append('Not Found')
 
-			write_output_file(path_xls,fuji_list,'../FUJI.csv')
+			write_output_file(path_xls,fuji_list,'FUJI.csv')
 
 		if SAKI3D.get() == '1':
 			saki3d_list = copy.deepcopy(joined_data_sorted)
@@ -61,7 +61,7 @@ def call_write_function(path_xls,path_csv):
 					row.append('Not Found')
 					row.append('Not Found')
 					
-			write_output_file(path_xls,saki3d_list,'../SAKI3D.csv')
+			write_output_file(path_xls,saki3d_list,'SAKI3D.csv')
 
 		if MIRAE.get() == '1':
 			mirae_list = copy.deepcopy(joined_data_sorted)
@@ -74,7 +74,7 @@ def call_write_function(path_xls,path_csv):
 					row.append('Not Found')
 					row.append('Not Found')
 					
-			write_output_file(path_xls,mirae_list,'../MIRAE.csv')
+			write_output_file(path_xls,mirae_list,'MIRAE.csv')
 
 		if SAKI2D.get() == '1':
 			saki2d_list = copy.deepcopy(joined_data_sorted)
@@ -87,10 +87,8 @@ def call_write_function(path_xls,path_csv):
 					row.append('Not Found')
 					row.append('Not Found')
 					
-			write_output_file(path_xls,saki2d_list,'../SAKI2D.csv')
+			write_output_file(path_xls,saki2d_list,'SAKI2D.csv')
 
-###l1 = list(map(lambda x: x[1][:-2] if (x[1][-2:]=='mm') else x[1], l))#####################
-		#write_output_file(path_xls,joined_data_sorted,'FUJI.csv')
 
 	elif board_layer_conf == 'TOP+BOT':
 		temp_csv_top = copy.deepcopy(csv_data)
@@ -103,7 +101,63 @@ def call_write_function(path_xls,path_csv):
 		joined_data_sorted = sorted(joined_data[1:],key = lambda x: x[4])
 		joined_data_sorted.insert(0,joined_data[0])
 
-		write_output_file(path_xls,joined_data_sorted,'FUJI.csv')
+		if FUJI.get() == '1':
+			fuji_list = copy.deepcopy(joined_data_sorted)
+			for row in fuji_list:
+				if row[1][-2:] == 'mm':
+					row[1] = row[1][:-2]
+					row[2] = row[2][:-2]
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+
+			write_output_file(path_xls,fuji_list,'FUJI.csv')
+
+		if SAKI3D.get() == '1':
+			saki3d_list = copy.deepcopy(joined_data_sorted)
+			for row in saki3d_list:
+				if row[1][-2:] == 'mm':
+					row[1] = row[1][:-2]
+					row[2] = row[2][:-2]
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+					
+			write_output_file(path_xls,saki3d_list,'SAKI3D.csv')
+
+		if MIRAE.get() == '1':
+			mirae_list = copy.deepcopy(joined_data_sorted)
+			for row in mirae_list:
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+					row[4] = csv_comp[row[4]][2]
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+					
+			write_output_file(path_xls,mirae_list,'MIRAE.csv')
+
+		if SAKI2D.get() == '1':
+			saki2d_list = copy.deepcopy(joined_data_sorted)
+			for row in saki2d_list:
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+					row[4] = csv_comp[row[4]][1]
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+					
+			write_output_file(path_xls,saki2d_list,'SAKI2D.csv')
+
+		#write_output_file(path_xls,joined_data_sorted,'FUJI.csv')
 
 		temp_csv_bot = copy.deepcopy(csv_data)
 		print(temp_csv_bot)
@@ -111,10 +165,66 @@ def call_write_function(path_xls,path_csv):
 		ref_bot, part_bot = clean_lists(ref_list_bot, part_list_bot)
 
 		joined_data_bot = join_csv_and_xls(temp_csv_bot,ref_bot,part_bot)
-		joined_data_bot_sorted = sorted(joined_data[1:],key = lambda x: x[4])
+		joined_data_bot_sorted = sorted(joined_data_bot[1:],key = lambda x: x[4])
 		joined_data_bot_sorted.insert(0,joined_data_bot[0])
 
-		write_output_file(path_xls,joined_data_bot_sorted,'FUJI-BOT.csv')
+		if FUJI.get() == '1':
+			fuji_list_bot = copy.deepcopy(joined_data_bot_sorted)
+			for row in fuji_list_bot:
+				if row[1][-2:] == 'mm':
+					row[1] = row[1][:-2]
+					row[2] = row[2][:-2]
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+
+			write_output_file(path_xls,fuji_list_bot,'FUJI-BOT.csv')
+
+		if SAKI3D.get() == '1':
+			saki3d_list_bot = copy.deepcopy(joined_data_bot_sorted)
+			for row in saki3d_list_bot:
+				if row[1][-2:] == 'mm':
+					row[1] = row[1][:-2]
+					row[2] = row[2][:-2]
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+					
+			write_output_file(path_xls,saki3d_list_bot,'SAKI3D-BOT.csv')
+
+		if MIRAE.get() == '1':
+			mirae_list_bot = copy.deepcopy(joined_data_bot_sorted)
+			for row in mirae_list_bot:
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+					row[4] = csv_comp[row[4]][2]
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+					
+			write_output_file(path_xls,mirae_list_bot,'MIRAE-BOT.csv')
+
+		if SAKI2D.get() == '1':
+			saki2d_list_bot = copy.deepcopy(joined_data_bot_sorted)
+			for row in saki2d_list_bot:
+				try:
+					row.append(csv_comp[row[4]][3])
+					row.append(csv_comp[row[4]][4])
+					row[4] = csv_comp[row[4]][1]
+				except:
+					row.append('Not Found')
+					row.append('Not Found')
+					
+			write_output_file(path_xls,saki2d_list_bot,'SAKI2D-BOT.csv')
+
+		#write_output_file(path_xls,joined_data_bot_sorted,'FUJI-BOT.csv')
 
 
 
